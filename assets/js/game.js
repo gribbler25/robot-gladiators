@@ -67,7 +67,6 @@ var fight = function (enemy) {
 
 var startGame = function () {
     // reset player stats
-    debugger;
     playerInfo.reset();
     //fight each robot by looping over them and fighting one at a time
     for (var i = 0; i < enemyInfo.length; i++) {
@@ -144,9 +143,18 @@ var randomNumber = function (min, max) {
     var value = Math.floor(Math.random() * (max - min + 1) + min);
     return value;
 }
+
+var getPlayerName = function () {
+    var name = "";
+    while (name === "" || name === null) {
+        name = window.prompt("What is your Robot's name??");
+    }
+    console.log("Player Robot's name is " + name);
+    return name;
+}
 //OBJECTS--
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
 
     health: 100,
 
