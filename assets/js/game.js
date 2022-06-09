@@ -34,17 +34,16 @@ var fight = function (enemy) {
             if (enemy.health <= 0) {
                 window.alert(enemy.name + " has died!");
                 //reward player for winning
-                playerInfo.money = playerInfo.money + 20;
+                playerInfo.money = + 20;
                 break;
             }
             else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left.");
             }
-            // enemy.attack = Math.floor(Math.random() * 12) + 2;??
-            // console.log("enemy attacks with " + enemy.attack + " attack points") ??
 
             // player is then ATTACKED by enemy, so decrease player's health by subtracting the amount set in the enemy.attack variable
             var damage = randomNumber(enemy.attack - 3, enemy.attack);
+            // remove player's health by enemy attack points
             playerInfo.health = Math.max(0, playerInfo.health - damage);
             console.log("enemy attacks with " + damage + " attack points")
             console.log(
@@ -67,11 +66,12 @@ var fight = function (enemy) {
 
 var startGame = function () {
     // reset player stats
-    debugger;
     playerInfo.reset();
+
     //fight each robot by looping over them and fighting one at a time
     for (var i = 0; i < enemyInfo.length; i++) {
         if (playerInfo.health > 0) {
+            debugger;
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40, 60);
