@@ -122,7 +122,7 @@ var endGame = function () {
             window.alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
         }
         else {
-            window.alert("You did not beat the high score of " + highScore + ". Maybe next time!");
+            window.alert("You did not beat the high score of " + isHighScore + ". Maybe next time!");
         }
 
     }
