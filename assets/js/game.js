@@ -26,11 +26,15 @@ var fightOrSkip = function () {
 
 //start FIGHT function
 var fight = function (enemy) {
+
     var isPlayersTurn = true;
     if (Math.random() < .5) {
         isPlayersTurn = false;
     }
     while (enemy.health > 0 && playerInfo.health > 0) {
+        if (fightOrSkip()) {
+            break;
+        }
 
         if (isPlayersTurn) {
             var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
