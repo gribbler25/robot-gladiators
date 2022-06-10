@@ -26,42 +26,50 @@ var fightOrSkip = function () {
 
 //start FIGHT function
 var fight = function (enemy) {
+    var isPlayersTurn = true;
+    if (Math.random() < .5) {
+        isPlayersTurn = false
+    }
     while (enemy.health > 0 && playerInfo.health > 0) {
+
         //prompt fight or no-fight option through checking the fightOrSkip function for true or false value
         if (fightOrSkip()) {
             break;
         }
-        //enemy is attacked--
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        //   remove enemy's health by subtracting randomly generated damage
-        enemy.health = Math.max(0, enemy.health - damage);
-        console.log(
-            playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
-        );
-        // check enemy's health--NESTED conditionals under the above true 'if' statement.
-        if (enemy.health <= 0) {
-            window.alert(enemy.name + " has died!");
-            //reward player for winning
-            playerInfo.money = playerInfo.money + 20;
-            break;
+        if (isPlayersTurn) {
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+            //   remove enemy's health by subtracting randomly generated damage
+            enemy.health = Math.max(0, enemy.health - damage);
+            console.log(
+                playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
+            );
+            // check enemy's health--NESTED conditionals under the above true 'if' statement.
+            if (enemy.health <= 0) {
+                window.alert(enemy.name + " has died!");
+                //reward player for winning
+                playerInfo.money = playerInfo.money + 20;
+                break;
+            }
+            else {
+                window.alert(enemy.name + " still has " + enemy.health + " health left.");
+                isPlayersTurn = !isPlayersTurn;
+            }
         }
-        else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }
-        // player is then ATTACKED by enemy, so decrease player's health by subtracting the amount set in the enemy.attack variable
-        var damage = randomNumber(enemy.attack - 3, enemy.attack);
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        console.log("enemy attacks with " + damage + " attack points")
-        console.log(
-            enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
-        );
-        // check player's health
-        if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + " has died!");
-            break;
-        }
-        else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+        if (!isPlayersTurn) {// player is then ATTACKED by enemy, so decrease player's health by subtracting the amount set in the enemy.attack variable
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+            console.log(
+                enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+            );
+            // check player's health
+            if (playerInfo.health <= 0) {
+                window.alert(playerInfo.name + " has died!");
+                break;
+            }
+            else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+                isPlayersTurn = !isPlayersTurn;
+            }
         }
     }//end of while loop
 };//end of fight function
@@ -75,6 +83,7 @@ var startGame = function () {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             var pickedEnemyObj = enemyInfo[i];
             pickedEnemyObj.health = randomNumber(40, 60);
+
             console.log("Enemy has " + enemyInfo[i].health + " health.")
             fight(pickedEnemyObj);
             if (i < enemyInfo.length - 1 && playerInfo.health > 0) {
