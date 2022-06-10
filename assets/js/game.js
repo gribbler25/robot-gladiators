@@ -18,7 +18,7 @@ var fightOrSkip = function () {
         if (confirmSkip) {
             window.alert(playerInfo.name + " has decided to skip this fight, Goodbye!");
             playerInfo.money = playerInfo.money - 10;
-            shop();
+            return true;
         }
     }
     return false;
@@ -28,14 +28,10 @@ var fightOrSkip = function () {
 var fight = function (enemy) {
     var isPlayersTurn = true;
     if (Math.random() < .5) {
-        isPlayersTurn = false
+        isPlayersTurn = false;
     }
     while (enemy.health > 0 && playerInfo.health > 0) {
-
-        //prompt fight or no-fight option through checking the fightOrSkip function for true or false value
-        if (fightOrSkip()) {
-            break;
-        }
+        debugger;
         if (isPlayersTurn) {
             var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
             //   remove enemy's health by subtracting randomly generated damage
@@ -50,12 +46,26 @@ var fight = function (enemy) {
                 playerInfo.money = + 20;
                 break;
             }
-            else {
-                window.alert(enemy.name + " still has " + enemy.health + " health left.");
-                isPlayersTurn = !isPlayersTurn;
+            {
+                var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+                //   remove enemy's health by subtracting randomly generated damage
+                enemy.health = Math.max(0, enemy.health - damage);
+                console.log(
+                    playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
+                );
+                // check enemy's health--NESTED conditionals under the above true 'if' statement.
+                if (enemy.health <= 0) {
+                    window.alert(enemy.name + " has died!");
+                    //reward player for winning
+                    playerInfo.money = playerInfo.money + 20;
+                    break;
+                }
+                else {
+                    window.alert(enemy.name + " still has " + enemy.health + " health left.");
+                }
             }
         }
-        if (!isPlayersTurn) {// player is then ATTACKED by enemy, so decrease player's health by subtracting the amount set in the enemy.attack variable
+        else {// player is then ATTACKED by enemy, so decrease player's health by subtracting the amount set in the enemy.attack variable
             var damage = randomNumber(enemy.attack - 3, enemy.attack);
             // remove player's health by enemy attack points
             playerInfo.health = Math.max(0, playerInfo.health - damage);
@@ -69,9 +79,10 @@ var fight = function (enemy) {
             }
             else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-                isPlayersTurn = !isPlayersTurn;
+
             }
         }
+        isPlayersTurn = !isPlayersTurn;
     }//end of while loop
 };//end of fight function
 
