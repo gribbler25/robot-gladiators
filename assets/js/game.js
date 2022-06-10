@@ -31,7 +31,7 @@ var fight = function (enemy) {
         isPlayersTurn = false;
     }
     while (enemy.health > 0 && playerInfo.health > 0) {
-        debugger;
+
         if (isPlayersTurn) {
             var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
             //   remove enemy's health by subtracting randomly generated damage
@@ -116,6 +116,16 @@ var startGame = function () {
 var endGame = function () {
     if (playerInfo.health > 0) {
         window.alert("Great job, you survived the game!  You now have a score of " + playerInfo.money + ".");
+        var isHighScore = localStorage.getItem("highscore") || 0;
+        if (isHighScore < playerInfo.money) {
+            localStorage.setItem("highscore", playerInfo.money);
+            localStorage.setItem("name", playerInfo.name);
+            window.alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+        }
+        else {
+            window.alert("You did not beat the high score of " + highScore + ". Maybe next time!");
+        }
+
     }
     else {
         window.alert("You've lost your robot in battle.");
@@ -213,15 +223,15 @@ var playerInfo = {
 var enemyInfo = [
     {
         name: "Roborto",
-        attack: randomNumber(10, 14),
+        attack: randomNumber(1, 2),
     },
     {
         name: "Amy Android",
-        attack: randomNumber(10, 14),
+        attack: randomNumber(1, 2),
     },
     {
         name: "Robo Trumble",
-        attack: randomNumber(10, 14)
+        attack: randomNumber(1, 2)
     }
 ];
 
